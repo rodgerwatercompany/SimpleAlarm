@@ -1,5 +1,5 @@
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class BottomBarUI extends cc.Component {
@@ -11,7 +11,7 @@ export default class BottomBarUI extends cc.Component {
 
     onLoad () {
 
-        this.pushClickEvent(this.btnAlarm,'onAlarmClick');
+        this.pushClickEvent(this.btnAlarm, 'onAlarmClick');
     }
 
     setEventHandler (eventHandler) {
@@ -22,7 +22,7 @@ export default class BottomBarUI extends cc.Component {
     onAlarmClick () {
 
         this.eventHandler.onAlarmClick();
-    }    
+    }
 
     private pushClickEvent (btnObject, handler) {
 

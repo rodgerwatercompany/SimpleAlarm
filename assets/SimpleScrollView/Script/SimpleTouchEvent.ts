@@ -1,5 +1,5 @@
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class SimpleTouchEvent extends cc.Component {
@@ -32,46 +32,49 @@ export default class SimpleTouchEvent extends cc.Component {
 
     setEventHandler (eventHandler) {
 
-        this.eventHandler = eventHandler; 
+        this.eventHandler = eventHandler;
     }
 
     onTouchStart (event:cc.Event.EventTouch) {
 
         cc.log('onTouchStart');
 
-        let touches = event.getTouches();
-        let touchLoc = touches[0].getLocation();
+        const touches = event.getTouches();
+        const touchLoc = touches[0].getLocation();
 
 
         this.params.oldLoc = touchLoc.y;
-        
+
+        this.eventHandler.onScrollViewStart();
     }
 
     onTouchMove (event:cc.Event.EventTouch) {
 
         cc.log('onTouchMove');
-        let touches = event.getTouches();
-        let touchLoc = touches[0].getLocation();
-        
-        let moveDis = touchLoc.y - this.params.oldLoc;
+        const touches = event.getTouches();
+        const touchLoc = touches[0].getLocation();
+
+        const moveDis = touchLoc.y - this.params.oldLoc;
         this.params.oldLoc = touchLoc.y;
 
         // cc.log(moveDis);
 
         const obj = {
-            'delta' : moveDis,
+            delta : moveDis
         };
 
         this.eventHandler.onScrollViewMove(obj);
     }
 
     onTouchEnd () {
-        
+
         cc.log('onTouchEnd');
+        this.eventHandler.onScrollViewEnd();
     }
 
     onTouchCancel () {
-        
+
         cc.log('onTouchCancel');
+        this.eventHandler.onScrollViewCancel();
     }
 }

@@ -1,7 +1,7 @@
-import AlarmPage from "../../UI/AlarmPage";
-import BottomBarUI from "../../UI/BottomBarUI";
+import AlarmPage from '../../UI/AlarmPage';
+import BottomBarUI from '../../UI/BottomBarUI';
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class UIManager extends cc.Component {
@@ -13,7 +13,7 @@ export default class UIManager extends cc.Component {
     bottomBarUI : BottomBarUI = null;
 
     onLoad () {
-        
+
     }
 
     setEventHandler (eventHandler) {
@@ -26,5 +26,5 @@ export default class UIManager extends cc.Component {
 
         cc.log('handleAlarmClick');
     }
-    
+
 }
