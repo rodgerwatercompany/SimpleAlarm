@@ -184,40 +184,54 @@ export default class SimpleScrollView extends cc.Component {
 
     private setCenter(start) {
 
-        this.orderedCells = [];
+        if (!this.loop) {
 
-        let idxStart = 0;
-        let idxContext = start;
-        if (this.cells.length % 2 === 0) {
+            this.orderedCells = this.cells;
 
-            idxStart = this.cells.length / 2;
+            // 不需考慮循環，只需要計算起始位置
+            let pos = (start * this.distanceCell);
+            for (let i = 0; i < this.orderedCells.length; i++) {
+
+                this.orderedCells[i].y = pos;
+                pos -= this.distanceCell;
+            }
+
         }else {
 
-            idxStart = ((this.cells.length - 1) / 2);
+            this.orderedCells = [];
+
+            let idxStart = 0;
+            let idxContext = start;
+            if (this.cells.length % 2 === 0) {
+
+                idxStart = this.cells.length / 2;
+            }else {
+
+                idxStart = ((this.cells.length - 1) / 2);
+            }
+
+            for (let i = idxStart, count = 0; count < this.cells.length; count++) {
+
+                this.orderedCells[i] = this.cells[idxContext];
+
+                i++;
+                if (i === this.cells.length)
+                    i = 0;
+
+                idxContext++;
+                if (idxContext === this.cells.length)
+                    idxContext = 0;
+            }
+
+            // 重新排列
+            const lenOrderedCell = this.orderedCells.length;
+            for (let i = 0; i < this.orderedCells.length; i++) {
+
+                if (lenOrderedCell % 2 === 0)
+                    this.orderedCells[i].y = (this.distanceCell * (((lenOrderedCell - 1) * 0.5) - 0.5)) - (i * this.distanceCell);
+                else
+                    this.orderedCells[i].y = (this.distanceCell * ((lenOrderedCell - 1) * 0.5)) - (i * this.distanceCell);
+            }
         }
-
-        for (let i = idxStart, count = 0; count < this.cells.length; count++) {
-
-            this.orderedCells[i] = this.cells[idxContext];
-
-            i++;
-            if (i === this.cells.length)
-                i = 0;
-
-            idxContext++;
-            if (idxContext === this.cells.length)
-                idxContext = 0;
-        }
-
-        // 重新排列
-        const lenorderedCell = this.orderedCells.length;
-        for (let i = 0; i < this.orderedCells.length; i++) {
-
-            if (lenorderedCell % 2 === 0)
-                this.orderedCells[i].y = (this.distanceCell * (((lenorderedCell - 1) * 0.5) - 0.5)) - (i * this.distanceCell);
-            else
-                this.orderedCells[i].y = (this.distanceCell * ((lenorderedCell - 1) * 0.5)) - (i * this.distanceCell);
-        }
-
     }
 }
