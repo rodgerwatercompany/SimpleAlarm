@@ -31,34 +31,11 @@ export default class SimpleLayout extends cc.Component {
         for (let i = 0; i < lenCell; i++) {
 
             const cell = this.node.children[i];
-            cell[direction] = (this.distanceCell * ((lenCell - 1) * 0.5)) - (i * this.distanceCell);
+            if (lenCell % 2 === 0)
+                cell[direction] = (this.distanceCell * (((lenCell - 1) * 0.5) - 0.5)) - (i * this.distanceCell);
+            else
+                cell[direction] = (this.distanceCell * ((lenCell - 1) * 0.5)) - (i * this.distanceCell);
         }
     }
-
-    // _doLayout () {
-
-    //     const lenCell = this.node.children.length;
-    //     const direction = this.useHorizontal ? 'x' : 'y';
-
-    //     if (lenCell === 1) {
-
-    //         this.node.children[0][direction] = 0;
-    //     }else if (lenCell % 2 === 0) {
-
-    //         for (let i = 0; i < lenCell; i++) {
-
-    //             const cell = this.node.children[i];
-    //             cell[direction] = (this.distanceCell * ((0.5 * lenCell) - 0.5)) - (i * this.distanceCell);
-    //         }
-    //     }else {
-
-    //         for (let i = 0; i < lenCell; i++) {
-
-    //             const cell = this.node.children[i];
-    //             cell[direction] = (this.distanceCell * ((lenCell - 1) * 0.5)) - (i * this.distanceCell);
-    //         }
-
-    //     }
-    // }
 
 }

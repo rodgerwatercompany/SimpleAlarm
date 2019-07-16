@@ -44,6 +44,7 @@ export default class SimpleScrollView extends cc.Component {
             this.model.sizeShow = (this.cells.length - 1) / 2;
         }
 
+        this.setCenter(0);
     }
 
     update (dt) {
@@ -137,25 +138,29 @@ export default class SimpleScrollView extends cc.Component {
 
     private reOrderCell (dt) {
 
-        const posStart = (this.orderedCells[0].y + dt) / this.distanceCell;
-        const posEnd = (this.orderedCells[this.orderedCells.length - 1].y + dt) / this.distanceCell;
-        const idxStart = Math.round(posStart);
-        const idxEnd = Math.abs(Math.round(posEnd));
+        let posStart = (this.orderedCells[0].y + dt) / this.distanceCell;
+        let posEnd = (this.orderedCells[this.orderedCells.length - 1].y + dt) / this.distanceCell;
+        let idxStart = Math.round(posStart);
+        let idxEnd = Math.abs(Math.round(posEnd));
 
         if (dt > 0) {
 
-            if (idxStart > this.model.sizeShow) {
+            while (idxStart > this.model.sizeShow) {
 
                 const firstElement = this.orderedCells.shift();
                 this.orderedCells.push(firstElement);
+                posStart = (this.orderedCells[0].y + dt) / this.distanceCell;
+                idxStart = Math.round(posStart);
             }
         }else if (dt < 0) {
 
-            if (idxEnd > this.model.sizeShow) {
+            while (idxEnd > this.model.sizeShow) {
 
                 this.orderedCells[this.orderedCells.length - 1].y = this.orderedCells[0].y + this.distanceCell;
                 const lastElement = this.orderedCells.pop();
                 this.orderedCells.unshift(lastElement);
+                posEnd = (this.orderedCells[this.orderedCells.length - 1].y + dt) / this.distanceCell;
+                idxEnd = Math.abs(Math.round(posEnd));
             }
 
         }
@@ -169,10 +174,42 @@ export default class SimpleScrollView extends cc.Component {
         }
     }
 
-    private setCenter (idx) {
+    private setCenter (start) {
 
+        this.orderedCells = [];
+
+        let idxStart = 0;
+        let idxContext = start;
+        if (this.cells.length % 2 === 0) {
+
+            idxStart = this.cells.length / 2;
+        }else {
+
+            idxStart = ((this.cells.length - 1) / 2);
+        }
+
+        for (let i = idxStart, count = 0; count < this.cells.length; count++) {
+
+            this.orderedCells[i] = this.cells[idxContext];
+
+            i++;
+            if (i === this.cells.length)
+                i = 0;
+
+            idxContext++;
+            if (idxContext === this.cells.length)
+                idxContext = 0;
+        }
+
+        // 重新排列
+        const lenorderedCell = this.orderedCells.length;
         for (let i = 0; i < this.orderedCells.length; i++) {
 
+            if (lenorderedCell % 2 === 0)
+                this.orderedCells[i].y = (this.distanceCell * (((lenorderedCell - 1) * 0.5) - 0.5)) - (i * this.distanceCell);
+            else
+                this.orderedCells[i].y = (this.distanceCell * ((lenorderedCell - 1) * 0.5)) - (i * this.distanceCell);
         }
+
     }
 }

@@ -1,7 +1,7 @@
-import UIPresenter from "./Manager/Presenter/UIPresenter";
-import UIManager from "./Manager/Mediator/UIManager";
+import UIPresenter from './Manager/Presenter/UIPresenter';
+import UIManager from './Manager/Mediator/UIManager';
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class GameMain extends cc.Component {
@@ -20,16 +20,16 @@ export default class GameMain extends cc.Component {
         this.presenters['UI'] = new UIPresenter();
 
         const mgrs = {
-            ui : this.uiManager,
+            ui : this.uiManager
         };
 
         this.presenters['UI'].setManager(mgrs);
-        
+
         // 管理器
         this.uiManager.setEventHandler(this.presenters['UI']);
 
-        
+
     }
 
-    
+
 }
