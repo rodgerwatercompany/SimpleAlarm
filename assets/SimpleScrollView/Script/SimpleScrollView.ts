@@ -145,28 +145,36 @@ export default class SimpleScrollView extends cc.Component {
 
         if (dt > 0) {
 
-            while (idxStart > this.model.sizeShow) {
+            for (let i = 0; i < this.orderedCells.length; i++) {
 
-                const firstElement = this.orderedCells.shift();
-                this.orderedCells.push(firstElement);
-                posStart = (this.orderedCells[0].y + dt) / this.distanceCell;
-                idxStart = Math.round(posStart);
+                if (idxStart > this.model.sizeShow) {
+
+                    const firstElement = this.orderedCells.shift();
+                    this.orderedCells.push(firstElement);
+                    posStart = (this.orderedCells[0].y + dt) / this.distanceCell;
+                    idxStart = Math.round(posStart);
+                }else
+                    break;
+
             }
         }else if (dt < 0) {
 
-            while (idxEnd > this.model.sizeShow) {
+            for (let i = 0; i < this.orderedCells.length; i++) {
 
-                this.orderedCells[this.orderedCells.length - 1].y = this.orderedCells[0].y + this.distanceCell;
-                const lastElement = this.orderedCells.pop();
-                this.orderedCells.unshift(lastElement);
-                posEnd = (this.orderedCells[this.orderedCells.length - 1].y + dt) / this.distanceCell;
-                idxEnd = Math.abs(Math.round(posEnd));
+                if (idxEnd > this.model.sizeShow) {
+
+                    this.orderedCells[this.orderedCells.length - 1].y = this.orderedCells[0].y + this.distanceCell;
+                    const lastElement = this.orderedCells.pop();
+                    this.orderedCells.unshift(lastElement);
+                    posEnd = (this.orderedCells[this.orderedCells.length - 1].y + dt) / this.distanceCell;
+                    idxEnd = Math.abs(Math.round(posEnd));
+                }else
+                    break;
             }
-
         }
     }
 
-    private moveCell () {
+    private moveCell() {
 
         for (let i = 1; i < this.orderedCells.length; i ++) {
 
@@ -174,7 +182,7 @@ export default class SimpleScrollView extends cc.Component {
         }
     }
 
-    private setCenter (start) {
+    private setCenter(start) {
 
         this.orderedCells = [];
 
