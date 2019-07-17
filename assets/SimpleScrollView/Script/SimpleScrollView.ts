@@ -1,6 +1,16 @@
 
 const { ccclass, property } = cc._decorator;
 
+@ccclass('ColorGroup')
+class ColorGroup {
+
+    @property(cc.Color)
+    color : cc.Color = null;
+
+    @property(Number)
+    opacity : number = 255;
+}
+
 @ccclass
 export default class SimpleScrollView extends cc.Component {
 
@@ -16,6 +26,14 @@ export default class SimpleScrollView extends cc.Component {
 
     @property(cc.Boolean)
     loop : boolean = false;
+
+    @property(ColorGroup)
+    highLightColor : ColorGroup = null;
+
+    @property(ColorGroup)
+    normalColor : ColorGroup = null;
+
+    public onScrollMoveCB : Function = null;
 
     private model : any = null;
     private releasedParams : any = null;
@@ -45,6 +63,7 @@ export default class SimpleScrollView extends cc.Component {
         }
 
         this.setCenter(0);
+        this.initColor();
     }
 
     update (dt) {
@@ -65,6 +84,7 @@ export default class SimpleScrollView extends cc.Component {
             }
 
             this.moveCell();
+            this.highlight();
         }
     }
 
@@ -108,6 +128,7 @@ export default class SimpleScrollView extends cc.Component {
         }
 
         this.moveCell();
+        this.highlight();
     }
 
     private deRelease() {
@@ -179,6 +200,54 @@ export default class SimpleScrollView extends cc.Component {
         for (let i = 1; i < this.orderedCells.length; i ++) {
 
             this.orderedCells[i].y = this.orderedCells[i - 1].y - this.distanceCell;
+        }
+
+        if (this.onScrollMoveCB)
+            this.onScrollMoveCB(this.getCenter());
+
+    }
+
+    private highlight () {
+
+        for (let i = 0; i < this.orderedCells.length; i++) {
+
+            if (this.orderedCells[i].y <= (this.distanceCell * 0.5) && this.orderedCells[i].y >= -(this.distanceCell * 0.5)) {
+
+                this.orderedCells[i].color =  this.highLightColor.color;
+                this.orderedCells[i].opacity =  this.highLightColor.opacity;
+            }else if (this.orderedCells[i].y <= (2 * this.distanceCell) && this.orderedCells[i].y >= -(2 * this.distanceCell)) {
+
+                this.orderedCells[i].color =  this.normalColor.color;
+                this.orderedCells[i].opacity =  this.normalColor.opacity;
+            }
+        }
+    }
+
+    private initColor () {
+
+        for (let i = 0; i < this.orderedCells.length; i++) {
+
+            if (this.orderedCells[i].y === 0) {
+
+                this.orderedCells[i].color =  this.highLightColor.color;
+                this.orderedCells[i].opacity =  this.highLightColor.opacity;
+            }else {
+
+                this.orderedCells[i].color =  this.normalColor.color;
+                this.orderedCells[i].opacity =  this.normalColor.opacity;
+            }
+        }
+    }
+
+    // 回傳目前物件
+    private getCenter () {
+
+        for (let i = 0; i < this.orderedCells.length; i++) {
+
+            if (this.orderedCells[i].y === 0) {
+
+                return this.orderedCells[i];
+            }
         }
     }
 

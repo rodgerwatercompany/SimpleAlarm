@@ -37,8 +37,6 @@ export default class SimpleTouchEvent extends cc.Component {
 
     onTouchStart (event:cc.Event.EventTouch) {
 
-        cc.log('onTouchStart');
-
         const touches = event.getTouches();
         const touchLoc = touches[0].getLocation();
 
@@ -50,14 +48,11 @@ export default class SimpleTouchEvent extends cc.Component {
 
     onTouchMove (event:cc.Event.EventTouch) {
 
-        cc.log('onTouchMove');
         const touches = event.getTouches();
         const touchLoc = touches[0].getLocation();
 
         const moveDis = touchLoc.y - this.params.oldLoc;
         this.params.oldLoc = touchLoc.y;
-
-        // cc.log(moveDis);
 
         const obj = {
             delta : moveDis
@@ -68,13 +63,11 @@ export default class SimpleTouchEvent extends cc.Component {
 
     onTouchEnd () {
 
-        cc.log('onTouchEnd');
         this.eventHandler.onScrollViewEnd();
     }
 
     onTouchCancel () {
 
-        cc.log('onTouchCancel');
         this.eventHandler.onScrollViewCancel();
     }
 }
