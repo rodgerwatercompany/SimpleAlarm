@@ -1,7 +1,6 @@
-import BasePresenter from "./BasePresenter";
-import UIManager from "../Mediator/UIManager";
+import BasePresenter from './BasePresenter';
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class UIPresenter extends BasePresenter {

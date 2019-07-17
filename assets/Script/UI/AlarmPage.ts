@@ -1,14 +1,10 @@
+import BaseUIPage from './BaseUIPage';
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
-export default class AlarmPage extends cc.Component {
+export default class AlarmPage extends BaseUIPage {
 
-    @property(cc.Label)
-    label: cc.Label = null;
-
-    @property
-    text: string = 'hello';
 
     private eventHandler : any = null;
 
