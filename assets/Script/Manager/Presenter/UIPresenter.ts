@@ -12,8 +12,17 @@ export default class UIPresenter extends BasePresenter {
 
     }
 
-    onAlarmClick () {
+    onBottomUIAlarmClick () {
 
-        this.mgrs['UI'].handleAlarmClick();
+    }
+
+    onQuickUIAlarmClick () {
+
+        this.mgrs['UI'].handleQuickUIAlarmClick();
+    }
+
+    onAlarmSettingPageConfirmClick (obj) {
+
+        this.mgrs['UI'].handleAlarmSettingPageConfirmClick(obj);
     }
 }

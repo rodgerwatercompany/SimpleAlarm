@@ -1,5 +1,5 @@
 
-const {ccclass, property} = cc._decorator;
+const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class BasePresenter {
@@ -20,7 +20,7 @@ export default class BasePresenter {
 
     setManager (mgrs) {
 
-        //this.mgrs['Performance'] = mgrs.performance;
+        // this.mgrs['Performance'] = mgrs.performance;
         this.mgrs['UI'] = mgrs.ui;
         // this.mgrs['Network'] = mgrs.network;
         // this.mgrs['Scene'] = mgrs.scene;

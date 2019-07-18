@@ -21,7 +21,7 @@ export default class BottomBarUI extends cc.Component {
 
     onAlarmClick () {
 
-        this.eventHandler.onAlarmClick();
+        this.eventHandler.onBottomUIAlarmClick();
     }
 
     private pushClickEvent (btnObject, handler) {
