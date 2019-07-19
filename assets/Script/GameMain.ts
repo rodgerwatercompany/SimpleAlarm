@@ -15,27 +15,8 @@ export default class GameMain extends cc.Component {
 
     onLoad () {
 
-        // 取得本地使用者數據
-        let userData = null;
-        if (true) {
-
-            cc.sys.localStorage.removeItem('userData');
-            userData = cc.sys.localStorage.getItem('userData');
-            if (!userData) {
-
-                userData = {
-                    userAlarms : []
-                };
-                cc.sys.localStorage.setItem('userData', JSON.stringify(userData));
-
-                cc.log(cc.sys.localStorage.getItem('userData'));
-            }
-
-            cc.log(userData);
-        }
-
+        // cc.sys.localStorage.removeItem('userData');
         const gameModel = new GameModel();
-
 
         // 任務處理中心
         this.presenters = [];
@@ -52,6 +33,11 @@ export default class GameMain extends cc.Component {
         // 管理器
         this.uiManager.setEventHandler(this.presenters['UI']);
 
+    }
+
+    start () {
+
+        this.presenters['UI'].onGameMainStart();
     }
 
 

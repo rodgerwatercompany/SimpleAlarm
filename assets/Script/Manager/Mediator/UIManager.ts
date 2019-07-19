@@ -8,6 +8,9 @@ const { ccclass, property } = cc._decorator;
 @ccclass
 export default class UIManager extends cc.Component {
 
+    @property(cc.Node)
+    nodeMask : cc.Node = null;
+
     @property(AlarmPage)
     alarmPage : AlarmPage = null;
 
@@ -33,6 +36,11 @@ export default class UIManager extends cc.Component {
         this.bottomBarUI.setEventHandler(eventHandler);
     }
 
+    setupUserAlarm (obj) {
+
+        this.alarmPage.initAlarms(obj);
+    }
+
     handleQuickUIAlarmClick () {
 
         const obj = {
@@ -45,6 +53,17 @@ export default class UIManager extends cc.Component {
     handleAlarmSettingPageConfirmClick (obj) {
 
         this.alarmPage.createAlarm(obj);
+    }
+
+    handleAlarmButtonClick (obj) {
+
+        const obj1 = {
+            alarmData : obj,
+            useShowAni : true,
+            isNewAlarm : false
+        };
+
+        this.alarmSettingPage.show(obj1);
     }
 
 }

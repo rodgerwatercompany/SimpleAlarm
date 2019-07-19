@@ -24,17 +24,31 @@ export default class AlarmPage extends BaseUI {
 
     }
 
-    createAlarm (obj) {
+    initAlarms (obj) {
 
-        ResourceManager.getResource('Prefab/AlarmButton', this.onAlarmButtonLoad.bind(this));
+        ResourceManager.getResource('Prefab/AlarmButton', (prefab) => {
+
+            for (const key in obj.userAlarms) {
+
+                const object = cc.instantiate(prefab);
+                this.layoutContent.addChild(object);
+                const alarmButton = object.getComponent(AlarmButton);
+                alarmButton.setup(obj.userAlarms[key]);
+                alarmButton.setEventHandler(this.eventHandler);
+            }
+        });
     }
 
-    onAlarmButtonLoad (obj) {
+    createAlarm (obj) {
 
-        this.layoutContent.addChild(obj);
-        const alarmButton = obj.getComponent(AlarmButton);
-        alarmButton.init();
-        alarmButton.setEventHandler(this.eventHandler);
+        ResourceManager.getResource('Prefab/AlarmButton', (prefab) => {
+
+            const object = cc.instantiate(prefab);
+            this.layoutContent.addChild(object);
+            const alarmButton = object.getComponent(AlarmButton);
+            alarmButton.setup(obj);
+            alarmButton.setEventHandler(this.eventHandler);
+        });
     }
 
 }

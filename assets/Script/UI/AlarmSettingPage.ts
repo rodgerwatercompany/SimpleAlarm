@@ -21,6 +21,7 @@ export default class AlarmSettingPage extends BaseUI {
     onLoad () {
 
         this.modelInfo = {
+            alarmID : '',
             time : '00:00'
         };
 
@@ -46,6 +47,8 @@ export default class AlarmSettingPage extends BaseUI {
             this.btnConfirm.node.setContentSize(480, 180);
         }else {
 
+            this.modelInfo.alarmID = obj.alarmData.alarmID;
+
             this.btnCancel.node.setContentSize(300, 180);
             this.btnConfirm.node.setContentSize(300, 180);
         }
@@ -59,6 +62,10 @@ export default class AlarmSettingPage extends BaseUI {
 
     onDeleteClick () {
 
+        const obj = {
+            alarmID : this.modelInfo.alarmID
+        };
+        this.eventHandler.onAlarmSettingPageDeleteClick(obj);
     }
 
     onConfirmClick () {

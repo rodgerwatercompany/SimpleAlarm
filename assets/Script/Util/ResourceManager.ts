@@ -12,7 +12,8 @@ export default class ResourceManager {
             if (err)
                 cc.log(err);
             else
-                cb(cc.instantiate(prefab));
+                cb(prefab);
+                // cb(cc.instantiate(prefab));
         });
     }
 }

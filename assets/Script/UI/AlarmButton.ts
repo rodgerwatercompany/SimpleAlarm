@@ -27,6 +27,7 @@ export default class AlarmButton extends cc.Component {
 
     setup (obj) {
 
+        this.modelInfo.alarmID = obj.alarmID;
     }
 
     setEventHandler (eventHandler) {
@@ -37,7 +38,7 @@ export default class AlarmButton extends cc.Component {
     onItSelfClick () {
 
         const obj = {
-
+            alarmID : this.modelInfo.alarmID
         };
         this.eventHandler.onAlarmButtonClick(obj);
     }
